@@ -7,5 +7,34 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "localhost:3002"
+  url      = env("DATABASE_URL")
+}
+
+model Transaction {
+  id                   String   @id @default(uuid())
+  value                Int
+  description          String
+  method               String
+  card_number          Int
+  card_owner           String
+  card_expiration_date DateTime
+  card_cvv             Int
+}
+
+enum PayablesStatus {
+  paid
+  waiting_funds
+}
+
+model Payables {
+  id           String         @id @default(uuid())
+  paid         PayablesStatus
+  payment_date DateTime
+  fee          Int
+}
+
+model Balance {
+  id            String @id @default(uuid())
+  available     Int
+  waiting_funds Int
 }
