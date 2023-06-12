@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:13
+    container_name: db
+    platform: linux/x86_64
+    ports:
+      - 3002:5432
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+    restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "root"]
+      timeout: 10s
+      retries: 5
